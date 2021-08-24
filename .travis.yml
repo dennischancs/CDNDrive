@@ -14,8 +14,9 @@ jobs:
             # python: 3.8.10 # 别用, travis自带的包库太多，还不能用python3 -m venv进虚拟环境，编译出来应用程序体积太大
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
             before_install: 
-                - 'sudo apt install -y python3.8-venv'
+                - 'sudo apt-get update && apt install -y python3.8-venv'
                 - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+                - 'pip3 install twine' # 上传pypi的工具
         -
             name: 'Python 3.8.10 on Linux (ARM64)'
             os: linux
@@ -24,7 +25,7 @@ jobs:
             language: shell
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
             before_install: 
-                - 'sudo apt install -y python3.8-venv'
+                - 'sudo apt-get update && apt install -y python3.8-venv'
                 - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
             name: 'Python 3.8.6 on macOS (AMD64)'
@@ -50,7 +51,7 @@ jobs:
             language: shell
             env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
             before_install: 
-                - './win32bit/python-3.8.10-32bit.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=/c/Python38'
+                - '.\win32bit\python-3.8.10-32bit.exe /quiet PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=C:\Python38'
                 - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
