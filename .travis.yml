@@ -5,25 +5,27 @@ env:
 jobs:
     include:
         -
-            name: 'Python 3.7.5 on Linux (AMD64)'
+            name: 'Python 3.8.1 on Linux (AMD64)'
             os: linux
             dist: bionic
             arch: amd64
-            language: python
-            python: 3.7.5
+            # language: python
+            # python: 3.7.5
+            language: shell
             env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz
             before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.7.5 on Linux (ARM64)'
+            name: 'Python 3.6.9 on Linux (ARM64)'
             os: linux
             dist: bionic
             arch: arm64
-            language: python
-            python: 3.7.5
+            # language: python
+            # python: 3.7.5
+            language: shell
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
             before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.7.4 on macOS (AMD64)'
+            name: 'Python 3.7.7 on macOS (AMD64)'
             os: osx
             osx_image: xcode11.2
             arch: amd64
@@ -31,14 +33,14 @@ jobs:
             env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
             before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.7.5 on Windows (AMD64)'
+            name: 'Python 3.8.10 win64 on Windows (AMD64)'
             os: windows
             arch: amd64
             language: shell
-            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-amd64.zip]
-            before_install: 'choco install python --version 3.7.5'
+            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
+            before_install: 'choco install python --version=3.8.10'
 install:
-    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
+    # - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
     - 'pip3 install pyinstaller'
 script:
