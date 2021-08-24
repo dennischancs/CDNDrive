@@ -16,17 +16,16 @@ jobs:
             before_install: 
                 - 'sudo apt-get update && sudo apt install -y python3.8-venv'
                 - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-                - 'pip3 install twine' # 上传pypi的工具
-        -
-            name: 'Python 3.8.10 on Linux (ARM64)'
-            os: linux
-            dist: focal
-            arch: arm64
-            language: shell
-            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
-            before_install: 
-                - 'sudo apt-get update && sudo apt install -y python3.8-venv'
-                - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+        # -
+            # name: 'Python 3.8.10 on Linux (ARM64)'
+            # os: linux
+            # dist: focal
+            # arch: arm64
+            # language: shell
+            # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
+            # before_install: 
+                # - 'sudo apt-get update && sudo apt install -y python3.8-venv'
+                # - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         # -
             # name: 'Python 3.8.6 on macOS (AMD64)'
             # os: osx
@@ -65,6 +64,7 @@ script:
     - 'cd release'
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a -tzip $RELEASE_FILENAME CDNDrivePro; elif [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -r $RELEASE_FILENAME CDNDrivePro; else tar -czvf $RELEASE_FILENAME CDNDrivePro; fi'
     - 'cd ..'
+    - 'pip3 install twine' # 上传pypi的工具最后安装，减少pyinstaller编译的应用程序体积
 deploy:
     -
         provider: releases
