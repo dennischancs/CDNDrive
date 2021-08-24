@@ -37,7 +37,7 @@ pip install CDNDrive
 pip install git+https://github.com/apachecn/CDNDrive
 ```
 
-方法三：前往[Releases页面](./releases)获取可直接运行的二进制文件。
+方法三：前往[Releases页面](https://github.com/dennischancs/CDNDrive/releases)获取可直接运行的二进制文件。
 
 ### 登录
 
