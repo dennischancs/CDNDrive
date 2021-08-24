@@ -5,38 +5,38 @@ env:
 jobs:
     include:
         -
-            name: 'Python 3.8.10 on Linux (AMD64)'
+            name: 'Python 3.8.7 on Linux (AMD64)'
             os: linux
             dist: bionic
             arch: amd64
             language: python
-            python: 3.8.10
+            python: 3.8.7
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
             # before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.8.10 on Linux (ARM64)'
+            name: 'Python 3.8.7 on Linux (ARM64)'
             os: linux
             dist: bionic
             arch: arm64
             language: python
-            python: 3.8.10
+            python: 3.8.7
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
             # before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.7.7 on macOS (AMD64)'
+            name: 'Python 3.8.7 on macOS (AMD64)'
             os: osx
-            osx_image: xcode11.2
+            osx_image: xcode12.2
             arch: amd64
             language: shell
             env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
             before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.8.10 win64 on Windows (AMD64)'
+            name: 'Python 3.8.7 win64 on Windows (AMD64)'
             os: windows
             arch: amd64
             language: shell
             env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
-            before_install: 'choco install python --version=3.8.10'
+            before_install: 'choco install python --version=3.8.7'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
