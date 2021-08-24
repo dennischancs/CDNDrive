@@ -9,21 +9,19 @@ jobs:
             os: linux
             dist: bionic
             arch: amd64
-            # language: python
+            language: python
             python: 3.8.10
-            language: shell
-            env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz
-            before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
+            # before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
             name: 'Python 3.8.10 on Linux (ARM64)'
             os: linux
             dist: bionic
             arch: arm64
-            # language: python
+            language: python
             python: 3.8.10
-            language: shell
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
-            before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+            # before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
             name: 'Python 3.7.7 on macOS (AMD64)'
             os: osx
@@ -37,7 +35,7 @@ jobs:
             os: windows
             arch: amd64
             language: shell
-            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
+            env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
             before_install: 'choco install python --version=3.8.10'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
