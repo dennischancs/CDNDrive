@@ -47,7 +47,7 @@ install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
     - 'pip3 install pyinstaller'
-    - 'pip3 install cdndrive' # complie executbale file
+    # - 'pip3 install cdndrive' # complie executbale file
 script:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrive -v; else python3 -m CDNDrive -v; fi'
     - 'pyinstaller -F -n CDNDrive -i icon.ico CDNDrive/__main__.py'
