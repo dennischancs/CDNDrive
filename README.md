@@ -1,5 +1,5 @@
 
-<h1 align="center">CDNDrive Plus = BiliDrive + SuperBed + Sync</h1>
+<h1 align="center">CDNDrive Pro = BiliDrive + SuperBed + Sync</h1>
 
 <h4 align="center">☁️ 废墟之上，重建辉煌！ ☁️</h4>
 <h4 align="center">☁️ 支持任意文件的全速上传与下载 ☁️</h4>
