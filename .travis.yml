@@ -1,7 +1,7 @@
 if: 'tag IS blank'
 env:
     global:
-        - TRAVIS_TAG=v2021.8.25.2
+        - TRAVIS_TAG=v2021.8.25
 jobs:
     include:
         -
@@ -16,42 +16,42 @@ jobs:
             before_install: 
                 - 'sudo apt install -y python3.8-venv'
                 - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.8.10 on Linux (ARM64)'
-            # os: linux
-            # dist: focal
-            # arch: arm64
-            # language: shell
-            # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
-            # before_install: 
-                # - 'sudo apt install -y python3.8-venv'
-                # - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.8.6 on macOS (AMD64)'
-            # os: osx
-            # osx_image: xcode11.6  # python3.8.6 include in osx:xcode11.6
-            # arch: amd64
-            # language: shell
-            # env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
-            # before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.8.10 win64 on Windows (AMD64)'
-            # os: windows
-            # arch: amd64
-            # language: shell
-            # env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
-            # before_install: 
-                # - 'choco install python --version=3.8.10'
-                # - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
-        # -
-            # name: 'Python 3.8.10 win32 on Windows (AMD64)'
-            # os: windows
-            # arch: amd64
-            # language: shell
-            # env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
-            # before_install: 
-                # - './win32bit/python-3.8.10-32bit.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=/c/Python38'
-                # - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
+        -
+            name: 'Python 3.8.10 on Linux (ARM64)'
+            os: linux
+            dist: focal
+            arch: arm64
+            language: shell
+            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
+            before_install: 
+                - 'sudo apt install -y python3.8-venv'
+                - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+        -
+            name: 'Python 3.8.6 on macOS (AMD64)'
+            os: osx
+            osx_image: xcode11.6  # python3.8.6 include in osx:xcode11.6
+            arch: amd64
+            language: shell
+            env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
+            before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+        -
+            name: 'Python 3.8.10 win64 on Windows (AMD64)'
+            os: windows
+            arch: amd64
+            language: shell
+            env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
+            before_install: 
+                - 'choco install python --version=3.8.10'
+                - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
+        -
+            name: 'Python 3.8.10 win32 on Windows (AMD64)'
+            os: windows
+            arch: amd64
+            language: shell
+            env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
+            before_install: 
+                - './win32bit/python-3.8.10-32bit.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=/c/Python38'
+                - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
