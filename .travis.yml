@@ -11,7 +11,7 @@ jobs:
             arch: amd64
             language: python
             python: 3.7.5
-            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
+            env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz
             before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
             name: 'Python 3.7.5 on Linux (ARM64)'
@@ -36,25 +36,14 @@ jobs:
             arch: amd64
             language: shell
             env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-win64.zip]
-            before_install: 
-                - 'choco install python --version 3.7.5'
-                - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.7.5 win32 on Windows (AMD64)'
-            # os: windows
-            # arch: amd64
-            # language: shell
-            # env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-win32.zip]
-            # before_install: 
-                # - 'curl https://www.python.org/ftp/python/3.7.5/python-3.7.5.exe --output /c/python37win32.exe'
-                # - '/c/python37win32.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=C:\Python37'
-                # - 'python -m venv tmpbuild && source tmpbuild/bin/activate'
+            before_install: 'choco install python --version 3.7.5'
+
 install:
-    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python3 -m pip install -U pip; else pip3 install -U pip; fi'
+    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
     - 'pip3 install pyinstaller'
 script:
-    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python3 -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
+    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
     - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
     - 'mkdir -p release/CDNDrivePro'
     - 'cp {dist/*,LICENSE,README.md} release/CDNDrivePro'
