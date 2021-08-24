@@ -1,7 +1,7 @@
 if: 'tag IS blank'
 env:
     global:
-        - TRAVIS_TAG=v1.8
+        - TRAVIS_TAG=v2021.8.24
 jobs:
     include:
         -
@@ -28,12 +28,19 @@ jobs:
             language: shell
             env: RELEASE_FILENAME=CDNDrive-$TRAVIS_TAG-macos-amd64.zip
         -
-            name: 'Python 3.7.5 on Windows (AMD64)'
+            name: 'Python 3.7.5 x86-64 on Windows (AMD64)'
             os: windows
             arch: amd64
             language: shell
-            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrive-$TRAVIS_TAG-windows-amd64.zip]
+            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrive-$TRAVIS_TAG-windows-x86-64.zip]
             before_install: 'choco install python --version 3.7.5'
+        -
+            name: 'Python 3.7.5 x86 on Windows (AMD64)'
+            os: windows
+            arch: amd64
+            language: shell
+            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrive-$TRAVIS_TAG-windows-x86.zip]
+            before_install: 'curl https://www.python.org/ftp/python/3.7.5/python-3.7.5.exe --output python37x86.exe && python37x86.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 TargetDir=C:\Python37 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
@@ -49,7 +56,6 @@ script:
 deploy:
     -
         provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
         file: release/$RELEASE_FILENAME
         overwrite: true
         skip_cleanup: true
