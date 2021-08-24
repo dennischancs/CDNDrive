@@ -1,7 +1,9 @@
-<h1 align="center">CDNDrive = BiliDrive + SuperBed</h1>
+
+<h1 align="center">CDNDrive Plus = BiliDrive + SuperBed + Sync</h1>
 
 <h4 align="center">☁️ 废墟之上，重建辉煌！ ☁️</h4>
 <h4 align="center">☁️ 支持任意文件的全速上传与下载 ☁️</h4>
+
 
 ## 特色
 
@@ -11,23 +13,31 @@
 - 稳定：带有分块校验与超时重试机制，在较差的网络环境中依然能确保文件的完整性
 - 快速：支持多线程传输与断点续传，同时借助各个站点的 CDN 资源，能最大化地利用网络环境进行上传与下载
 
+## TODO
+
+整合[1299172402/BiliDrive-BT: BiliDrive魔改版 有网盘同步，类bt上传功能，大文件传输。](https://github.com/1299172402/BiliDrive-BT)的功能：
+
+- [ ] 同步功能（上传下载）
+- [ ] 批量上传/下载文件
+  - [ ] 保持文件相对路径（example/upload.bd中是绿色版Advanced Renamer软件） （或使用meta 4b77bc2a9ddbfb7bf8e3c154f4e347d20dcffa58下载）
+
 ## 使用指南
 
 ### 安装
 
-通过`pip`（推荐）：
+方法一：通过`pip`（推荐）：
 
 ```
 pip install CDNDrive
 ```
 
-从源码安装：
+方法二：从源码安装：
 
 ```
 pip install git+https://github.com/apachecn/CDNDrive
 ```
 
-下载对应操作系统的单文件：详见[Releases页面](./releases)
+方法三：前往[Releases页面](./releases)获取可直接运行的二进制文件。
 
 ### 登录
 
