@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import setuptools
-import CDNDrive
+import CDNDrivePro
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -11,11 +11,11 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
     install_requires = fh.read().splitlines()
 
 setuptools.setup(
-    name="CDNDrive",
-    version=CDNDrive.__version__,
-    url="https://github.com/apachecn/CDNDrive",
-    author=CDNDrive.__author__,
-    author_email=CDNDrive.__email__,
+    name="CDNDrivePro",
+    version=CDNDrivePro.__version__,
+    url="https://github.com/apachecn/CDNDrivePro",
+    author=CDNDrivePro.__author__,
+    author_email=CDNDrivePro.__email__,
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
@@ -33,7 +33,7 @@ setuptools.setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Utilities",
     ],
-    description="☁️ CDNDrive，支持任意文件的全速上传与下载",
+    description="☁️ CDNDrivePro，支持任意文件的全速上传与下载",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords=[
@@ -53,8 +53,8 @@ setuptools.setup(
     python_requires=">=3.6",
     entry_points={
         'console_scripts': [
-            "CDNDrive=CDNDrive.__main__:main",
-            "cdrive=CDNDrive.__main__:main",
+            "CDNDrivePro=CDNDrivePro.__main__:main",
+            "cdrivep=CDNDrivePro.__main__:main",
         ],
     },
     packages=setuptools.find_packages(),

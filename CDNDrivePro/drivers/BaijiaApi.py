@@ -9,7 +9,7 @@ import rsa
 import time
 import re
 from urllib import parse
-from CDNDrive.util import *
+from CDNDrivePro.util import *
 from .BaseApi import BaseApi
 
 class BaijiaApi(BaseApi):

@@ -9,51 +9,55 @@ import rsa
 import time
 import re
 from urllib import parse
-from CDNDrive.util import *
+from CDNDrivePro.util import *
 from .BaseApi import BaseApi
 
-class NeteApi(BaseApi):
+class AliApi(BaseApi):
 
-    default_url = lambda self, hash: f"http://dingyue.ws.126.net/{hash}.png"
-    extract_hash = lambda self, s: re.findall(r"\d{4}/\d{4}/\w{32}", s)[0]    
+    default_url = lambda self, hash: f"https://ae01.alicdn.com/kf/{hash}.png"
+    extract_hash = lambda self, s: re.findall(r"\w{34}", s)[0]    
 
     def __init__(self):
         super().__init__()
-        self.cookies = load_cookies('163')
+        self.cookies = load_cookies('ali')
         
     def meta2real(self, url):
-        if re.match(r"^nedrive://\d{4}/\d{4}/\w{32}$", url):
+        if re.match(r"^aldrive://\w{34}$", url):
             return self.default_url(self.extract_hash(url))
         else:
             return None
             
     def real2meta(self, url):
-        return 'nedrive://' + self.extract_hash(url)
+        return 'aldrive://' + self.extract_hash(url)
         
     def set_cookies(self, cookie_str):
         self.cookies = parse_cookies(cookie_str)
-        save_cookies('163', self.cookies)
+        save_cookies('ali', self.cookies)
         
     def image_upload(self, img):
             
-        url = 'http://upload.buzz.163.com/picupload'
-        data = {'from': 'neteasecode_mp'}
+        url = 'https://kfupload.alibaba.com/mupload'
         files = {'file': (f"{time.time()}.png", img, 'image/png')}
+        data = {
+            'scene': 'aeMessageCenterImageRule', 
+            'name': f'{time.time()}.png'
+        }
         try:
             j = request_retry(
                 'POST', url, 
-                data=data,
+                data=data, 
                 files=files, 
-                headers=NeteApi.default_hdrs,
+                headers=AliApi.default_hdrs,
                 cookies=self.cookies
             ).json()
         except Exception as ex:
             return {'code': 114514, 'message': str(ex)}
         
-        j['message'] = j['msg']
-        if j['code'] == 200:
-            j['code'] = 0
-            j['data'] = j['data']['url']
+        j['code'] = int(j['code'])
+        if j['code'] != 0:
+            j['message'] = f"错误代码 {j['code']}"
+        else:
+            j['data'] = j['url']
         return j
         
 def main():
@@ -61,7 +65,7 @@ def main():
     if op not in ['cookies', 'upload']:
         return
         
-    api = NeteApi()
+    api = AliApi()
     if op == 'cookies':
         cookies = sys.argv[2]
         api.set_cookies(cookies)

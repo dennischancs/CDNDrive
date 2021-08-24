@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from CDNDrive.util import *
+from CDNDrivePro.util import *
 
 class BaseApi:
 

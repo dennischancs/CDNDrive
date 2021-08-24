@@ -18,10 +18,10 @@ import time
 import traceback
 import types
 from concurrent.futures import ThreadPoolExecutor
-from CDNDrive import __version__
-from CDNDrive.drivers import *
-from CDNDrive.encoders import *
-from CDNDrive.util import *
+from CDNDrivePro import __version__
+from CDNDrivePro.drivers import *
+from CDNDrivePro.encoders import *
+from CDNDrivePro.util import *
 
 encoder = None
 api = None
@@ -277,7 +277,7 @@ def interact_mode(parser, subparsers):
     parser.print_help()
     while True:
         try:
-            args = shlex.split(input("CDNDrive > "))
+            args = shlex.split(input("CDNDrivePro > "))
             args = parser.parse_args(args)
             args.func(args)
         except:
@@ -285,8 +285,8 @@ def interact_mode(parser, subparsers):
 
 def main():
     signal.signal(signal.SIGINT, lambda signum, frame: os.kill(os.getpid(), 9))
-    parser = argparse.ArgumentParser(prog="CDNDrive", description="Make Picbeds Great Cloud Storages!", formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("-v", "--version", action="version", version=f"CDNDrive version: {__version__}")
+    parser = argparse.ArgumentParser(prog="CDNDrivePro", description="Make Picbeds Great Cloud Storages!", formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("-v", "--version", action="version", version=f"CDNDrivePro version: {__version__}")
     parser.set_defaults(func=lambda x: parser.print_help())
     subparsers = parser.add_subparsers()
     

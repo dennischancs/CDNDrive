@@ -1,5 +1,5 @@
 
-<h1 align="center">CDNDrive Pro = BiliDrive + SuperBed + Sync</h1>
+<h1 align="center">CDNDrivePro = BiliDrive + SuperBed + Sync</h1>
 
 <h4 align="center">☁️ 废墟之上，重建辉煌！ ☁️</h4>
 <h4 align="center">☁️ 支持任意文件的全速上传与下载 ☁️</h4>
@@ -28,16 +28,16 @@
 方法一：通过`pip`（推荐）：
 
 ```
-pip install CDNDrive
+pip install CDNDrivePro
 ```
 
 方法二：从源码安装：
 
 ```
-pip install git+https://github.com/apachecn/CDNDrive
+pip install git+https://github.com/apachecn/CDNDrivePro
 ```
 
-方法三：前往[Releases页面](https://github.com/dennischancs/CDNDrive/releases)获取可直接运行的二进制文件。
+方法三：前往[Releases页面](https://github.com/dennischancs/CDNDrivePro/releases)获取可直接运行的二进制文件。
 
 ### 登录
 
@@ -56,7 +56,7 @@ $ cdrive
 -bash: cdrive: command not found
 ```
 
-解决方案: https://github.com/apachecn/CDNDrive/issues/7
+解决方案: https://github.com/apachecn/CDNDrivePro/issues/7
 
 ### 设置 Cookie
 
@@ -121,7 +121,7 @@ cdrive history [-h]
 
 不传入任何命令行参数，直接运行程序即可进入交互模式
 
-该模式下，程序会打印命令提示符`CDNDrive > `，并等待用户输入命令
+该模式下，程序会打印命令提示符`CDNDrivePro > `，并等待用户输入命令
 
 ## 技术实现
 

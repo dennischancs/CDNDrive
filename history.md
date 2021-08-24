@@ -32,7 +32,7 @@ v2020.04.10
 
 v2020.03.20
 
-+   更名为 CDNDrive
++   更名为 CDNDrivePro
 +   适配百家号、CSDN、简书、搜狐、微博五个平台
 +   引入 GIF 编码器
 +   重构 CLI 和 Cookie、历史机制

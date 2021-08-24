@@ -9,7 +9,7 @@ import rsa
 import time
 import re
 from urllib.parse import unquote
-from CDNDrive.util import *
+from CDNDrivePro.util import *
 from .BaseApi import BaseApi
 
 class SogouApi(BaseApi):

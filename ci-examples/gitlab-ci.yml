@@ -12,7 +12,7 @@
 image: python:3.6
 
 before_script:
-  - pip install git+https://github.com/apachecn/CDNDrive
+  - pip install git+https://github.com/apachecn/CDNDrivePro
   - cdrive -v
   - echo $NAME
   
