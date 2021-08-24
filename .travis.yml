@@ -31,13 +31,12 @@ jobs:
             env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
             before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
-            name: 'Python 3.7.5 win64 on Windows (AMD64)'
+            name: 'Python 3.7.5 on Windows (AMD64)'
             os: windows
             arch: amd64
             language: shell
-            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-win64.zip]
+            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-amd64.zip]
             before_install: 'choco install python --version 3.7.5'
-
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
