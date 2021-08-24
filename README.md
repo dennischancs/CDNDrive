@@ -27,6 +27,8 @@ pip install CDNDrive
 pip install git+https://github.com/apachecn/CDNDrive
 ```
 
+下载对应操作系统的单文件：详见[Releases页面](./releases)
+
 ### 登录
 
 ```
