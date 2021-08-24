@@ -39,16 +39,16 @@ jobs:
             before_install: 
                 - 'choco install python --version 3.7.5'
                 - 'python -m venv tmpbuild && source tmpbuild/bin/activate'
-        -
-            name: 'Python 3.7.5 win32 on Windows (AMD64)'
-            os: windows
-            arch: amd64
-            language: shell
-            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-win32.zip]
-            before_install: 
-                - 'curl https://www.python.org/ftp/python/3.7.5/python-3.7.5.exe --output /c/python37win32.exe'
-                - '/c/python37win32.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=C:\Python37'
-                - 'python -m venv tmpbuild && source tmpbuild/bin/activate'
+        # -
+            # name: 'Python 3.7.5 win32 on Windows (AMD64)'
+            # os: windows
+            # arch: amd64
+            # language: shell
+            # env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-windows-win32.zip]
+            # before_install: 
+                # - 'curl https://www.python.org/ftp/python/3.7.5/python-3.7.5.exe --output /c/python37win32.exe'
+                # - '/c/python37win32.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=C:\Python37'
+                # - 'python -m venv tmpbuild && source tmpbuild/bin/activate'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
