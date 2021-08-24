@@ -40,7 +40,7 @@ jobs:
             env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
             before_install: 'choco install python --version=3.8.10'
 install:
-    # - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
+    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
     - 'pip3 install pyinstaller'
 script:
