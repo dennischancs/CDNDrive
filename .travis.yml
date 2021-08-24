@@ -1,21 +1,19 @@
 if: 'tag IS blank'
 env:
     global:
-        - TRAVIS_TAG=v2021.8.25
+        - TRAVIS_TAG=v2021.8.25.2
 jobs:
     include:
         -
             name: 'Python 3.8.10 on Linux (AMD64)'
             os: linux
-            dist: focal
+            dist: focal   # python3.8.10 include in osx:focal
             arch: amd64
             language: shell
             # language: python
             # python: 3.8.10 # 别用, travis自带的包库太多，还不能用python3 -m venv进虚拟环境，编译出来应用程序体积太大
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
-            before_install: 
-               - 'apt update && apt install -y python3 python3-pip'
-               - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+            before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
             name: 'Python 3.8.10 on Linux (ARM64)'
             os: linux
@@ -23,9 +21,7 @@ jobs:
             arch: arm64
             language: shell
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
-            before_install: 
-               - 'apt update && apt install -y python3 python3-pip'
-               - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+            before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         -
             name: 'Python 3.8.6 on macOS (AMD64)'
             os: osx
@@ -50,8 +46,7 @@ jobs:
             language: shell
             env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
             before_install: 
-                - 'curl https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe -o python-win32.exe'
-                - './python-win32.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=/c/Python38'
+                - './CDNDrivePro/win32bit/python-3.8.10-32bit.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0 AssociateFiles=0 Shortcuts=0 InstallLauncherAllUsers=1 TargetDir=/c/Python38'
                 - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
