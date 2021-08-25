@@ -4,24 +4,26 @@ env:
         - TRAVIS_TAG=v2021.8.25
 jobs:
     include:
-        -
-            name: 'Python 3.8.10 on Linux (AMD64)'
-            os: linux
-            dist: focal   # python3.8.10 include in osx:focal
-            arch: amd64
-            language: shell
-            # language: python
-            # python: 3.8.10 # 别用, travis自带的包库太多，还不能用python3 -m venv进虚拟环境，编译出来应用程序体积太大
-            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
-            before_install: 
-                - 'sudo apt-get update && sudo apt install -y python3.8-venv'
-                - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
+        # -
+            # name: 'Python 3.8.10 on Linux (AMD64)'
+            # os: linux
+            # dist: focal   # python3.8.10 include in osx:focal
+            # arch: amd64
+            # language: shell
+            # # language: python
+            # # python: 3.8.10 # pyinstaller编译时别用, travis自带的包库太多，而且不能python3 -m venv进虚拟环境，编译出来应用程序体积太大
+            # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
+            # before_install: 
+                # - 'sudo apt-get update && sudo apt install -y python3.8-venv'
+                # - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
         # -
             # name: 'Python 3.8.10 on Linux (ARM64)'
             # os: linux
-            # dist: focal
+            # dist: focal   # python3.8.10 include in osx:focal
             # arch: arm64
             # language: shell
+            # # language: python
+            # # python: 3.8.10 # pyinstaller编译时别用, travis自带的包库太多，而且不能python3 -m venv进虚拟环境，编译出来应用程序体积太大
             # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
             # before_install: 
                 # - 'sudo apt-get update && sudo apt install -y python3.8-venv'
@@ -52,6 +54,15 @@ jobs:
             # before_install: 
                 # - '7z x ./win32bit/python-3.8.10-32bit.7z -o/c/'  # 在choco中没有提供python-3.8.10-32bit，我做了一个带tmpbuild的venv环境的python-3.8.10-32bit
                 # - '/c/Python38/tmpbuild/Scripts/activate.bat'
+        -
+            name: 'Pypi' # pypi独立一个系统，不与Pyinstaller编译共用一个系统以减少应用程序体积
+            os: linux
+            dist: bonic
+            arch: amd64
+            language: python
+            python: 3.8.10
+            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
+
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
@@ -75,7 +86,7 @@ deploy:
         provider: pypi
         user: __token__
         password: $PYPI_API_TOKEN
-        distributions: 'pip3 install twine && sdist bdist_wheel'  # twine为上传pypi的工具最后安装，减少pyinstaller编译的应用程序体积
+        distributions: 'sdist bdist_wheel'
         skip_existing: true
         on:
-            condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
+            condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64', '$TRAVIS_JOB_NAME = Pypi']
