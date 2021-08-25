@@ -27,9 +27,9 @@ jobs:
                 # - 'deactivate'
                 # - '/opt/python/3.6.8/bin/python -m venv exebuild && source exebuild/bin/activate'
         -
-            name: 'Python 3.6.8 on macOS (AMD64)'
+            name: 'Python 3.7.5 on macOS (AMD64)'
             os: osx
-            osx_image: xcode8.3  # python3.6.8 include in osx:xcode8.3
+            osx_image: xcode11.2  # python3.7.5 include in osx:xcode8.3
             arch: amd64
             language: shell
             env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
