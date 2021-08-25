@@ -42,18 +42,18 @@ pip install git+https://github.com/apachecn/CDNDrivePro
 ### 登录
 
 ```
-cdrive login [-h] site username password
+cdrivep login [-h] site username password
 
 site: 站点名称（见 -h）
 username: 用户名
 password: 密码
 ```
 
-> 运行 cdrive 报错
+> 运行 cdrivep 报错
 
 ```
-$ cdrive
--bash: cdrive: command not found
+$ cdrivep
+-bash: cdrivep: command not found
 ```
 
 解决方案: https://github.com/apachecn/CDNDrivePro/issues/7
@@ -61,7 +61,7 @@ $ cdrive
 ### 设置 Cookie
 
 ```
-cdrive cookies [-h] site cookies
+cdrivep cookies [-h] site cookies
 
 site: 站点名称（见 -h）
 cookies: Cookie
@@ -70,7 +70,7 @@ cookies: Cookie
 ### 查看登录状态
 
 ```
-cdrive userinfo [-h] site
+cdrivep userinfo [-h] site
 
 site: 站点名称（见 -h）
 ```
@@ -78,7 +78,7 @@ site: 站点名称（见 -h）
 ### 上传
 
 ```
-cdrive upload [-h] [-b BLOCK_SIZE] [-t THREAD] site file
+cdrivep upload [-h] [-b BLOCK_SIZE] [-t THREAD] site file
 
 site: 站点名称（见 -h）
 file: 待上传的文件路径
@@ -92,9 +92,9 @@ file: 待上传的文件路径
 ### 下载
 
 ```
-cdrive download [-h] [-f] [-t THREAD] meta [file]
+cdrivep download [-h] [-f] [-t THREAD] meta [file]
 
-meta: META URL (通常以 cdrive:// 开头)
+meta: META URL (通常以 cdrivep:// 开头)
 file: 另存为新的文件名, 不指定则保存为上传时的文件名
 
 -f: 覆盖已有文件
@@ -106,7 +106,7 @@ file: 另存为新的文件名, 不指定则保存为上传时的文件名
 ### 查看文件元数据
 
 ```
-cdrive info [-h] meta
+cdrivep info [-h] meta
 
 meta: META URL
 ```
@@ -114,7 +114,7 @@ meta: META URL
 ### 查看历史记录
 
 ```
-cdrive history [-h]
+cdrivep history [-h]
 ```
 
 ### 交互模式
