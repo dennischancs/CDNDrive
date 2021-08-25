@@ -1,10 +1,9 @@
 if: 'tag IS blank'
 env:
     global:
-        - TRAVIS_TAG=v2021.8.25.1
+        - TRAVIS_TAG=v2021.8.25.1-nuitka
 jobs:
     include:
-        - stage: 'build executbale file && deploy'
         -
             name: 'Python 3.6.8 on Linux (AMD64)'
             os: linux
@@ -54,42 +53,36 @@ jobs:
             before_install: 
                 - '7z x ./winpy/python-3.6.8-32bit.7z -o/c/'  # choco不提供32bit，自己做了一个python-3.6.8-32bit解压包
                 - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
-        install:
-            # - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'  # 不升级pip，最新的pip 21.x.x 可能引起兼容性冲突
-            - 'pip3 install -r requirements.txt'
-            - 'pip3 install pyinstaller'
-        script:
-            - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
-            - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
-            - 'mkdir -p release/CDNDrivePro'
-            - 'cp {dist/*,LICENSE,README.md} release/CDNDrivePro'
-            - 'cd release'
-            - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a -tzip $RELEASE_FILENAME CDNDrivePro; elif [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -r $RELEASE_FILENAME CDNDrivePro; else tar -czvf $RELEASE_FILENAME CDNDrivePro; fi'
-            - 'cd ..'
-        deploy:
-            provider: releases
-            api_key: $GITHUB_OAUTH_TOKEN
-            file: release/$RELEASE_FILENAME
-            overwrite: true
-            skip_cleanup: true
-
-        # - stage: 'generate Pypi file && deploy'
-        # -
-            # name: 'Pypi'
-            # os: linux
-            # dist: xenial
-            # arch: amd64
-            # language: python
-            # python: 3.6.8 # 使用最低要求版本，增强兼容性
-            # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
-        # deploy:
-            # provider: pypi
-            # script: 'source ~/virtualenv/python3.6.8/bin/activate'
-            # user: __token__
-            # password: $PYPI_API_TOKEN
-            # distributions: 'sdist bdist_wheel'
-            # skip_existing: true
-            # on:
-                # # condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
-                # condition: ['$TRAVIS_JOB_NAME = Pypi']
+install:
+    # - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'  # 不升级pip，最新的pip 21.x.x 可能有不兼容当前python版本的bug
+    - 'pip3 install -r requirements.txt'
+    # - 'pip3 install pyinstaller'
+    - 'pip3 install nuitka'
+script:
+    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
+    # 用pyinstaller编译, 可执行文件效率提高
+    - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
+    - 'mkdir -p release/CDNDrivePro'
+    - 'cp {dist/*,LICENSE,README.md} release/CDNDrivePro'
+    - 'cd release'
+    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a -tzip $RELEASE_FILENAME CDNDrivePro; elif [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -r $RELEASE_FILENAME CDNDrivePro; else tar -czvf $RELEASE_FILENAME CDNDrivePro; fi'
+    - 'cd ..'
+    # 用nuitka编译, 可执行文件效率提高
+    - 'echo y | nuitka --onefile --standalone --windows-icon-from-ico=icon.ico CDNDrivePro/__main__.py --output-dir=dist'
+deploy:
+    -
+        provider: releases
+        api_key: $GITHUB_OAUTH_TOKEN
+        file: release/$RELEASE_FILENAME
+        overwrite: true
+        skip_cleanup: true
+    # -
+        # provider: pypi
+        # script: 'source ~/virtualenv/python3.6.8/bin/activate'
+        # user: __token__
+        # password: $PYPI_API_TOKEN
+        # distributions: 'sdist bdist_wheel'
+        # skip_existing: true
+        # on:
+            # condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
 
