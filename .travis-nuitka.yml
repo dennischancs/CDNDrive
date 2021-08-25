@@ -61,7 +61,8 @@ install:
 script:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
     # 用pyinstaller编译, 可执行文件效率提高
-    - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
+    # - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
+    - 'nuitka --onefile --standalone --windows-icon-from-ico=icon.ico CDNDrivePro/__main__.py --output-dir=dist'
     - 'mkdir -p release/CDNDrivePro'
     - 'cp {dist/*,LICENSE,README.md} release/CDNDrivePro'
     - 'cd release'

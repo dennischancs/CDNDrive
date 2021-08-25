@@ -54,7 +54,7 @@ jobs:
         # - '7z x ./winpy/python-3.6.8-32bit.7z -o/c/'  # choco不提供32bit，自己做了一个python-3.6.8-32bit解压包
         # - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
   install:
-    # - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'  # 不升级pip，最新的pip 21.x.x 可能引起兼容性冲突
+    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'  # 不升级pip，最新的pip 21.x.x 可能引起兼容性冲突
     - 'pip3 install -r requirements.txt'
     - 'pip3 install pyinstaller'
   script:
