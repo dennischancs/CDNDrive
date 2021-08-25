@@ -41,7 +41,8 @@ jobs:
             language: shell
             env: ['PATH=/c/Python36:/c/Python36/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
             before_install: 
-                - 'choco install python --version=3.6.8'
+                # - 'choco install python --version=3.6.8'
+                - '7z x ./winpy/python-3.6.8-64bit.7z -o/c/'   # choco安装太耗时，自己做了一个python-3.6.8-64bit解压包
                 - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
         # -
             # name: 'Python 3.6.8 win32 on Windows (AMD64)'
@@ -50,7 +51,7 @@ jobs:
             # language: shell
             # env: ['PATH=/c/Python36:/c/Python36/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
             # before_install: 
-                # - '7z x ./win32bit/python-3.6.8-32bit.7z -o/c/'  # 自己做了一个python-3.6.8-32bit解压包
+                # - '7z x ./winpy/python-3.6.8-32bit.7z -o/c/'  # choco不提供32bit，自己做了一个python-3.6.8-32bit解压包
                 # - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
         # -
             # name: 'Pypi'
