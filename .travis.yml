@@ -4,7 +4,6 @@ env:
     - TRAVIS_TAG=v2021.8.25.1
 jobs:
   include:
-    - stage: 'build && deploy'
     -
       name: 'Python 3.6.8 on Linux (AMD64)'
       os: linux
@@ -73,23 +72,22 @@ jobs:
     overwrite: true
     skip_cleanup: true
 
-    # - stage: 'generate Pypi file && deploy'
-    # -
-      # name: 'Pypi'
-      # os: linux
-      # dist: xenial
-      # arch: amd64
-      # language: python
-      # python: 3.6.8 # 使用最低要求版本，增强兼容性
-      # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
-    # deploy:
-      # provider: pypi
-      # script: 'source ~/virtualenv/python3.6.8/bin/activate'
-      # user: __token__
-      # password: $PYPI_API_TOKEN
-      # distributions: 'sdist bdist_wheel'
-      # skip_existing: true
-      # on:
-        # # condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
-        # condition: ['$TRAVIS_JOB_NAME = Pypi']
+  -
+    name: 'Pypi'
+    os: linux
+    dist: xenial
+    arch: amd64
+    language: python
+    python: 3.6.8 # 使用最低要求版本，增强兼容性
+    env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
+  deploy:
+    provider: pypi
+    script: 'source ~/virtualenv/python3.6.8/bin/activate'
+    user: __token__
+    password: $PYPI_API_TOKEN
+    distributions: 'sdist bdist_wheel'
+    skip_existing: true
+    on:
+      # condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
+      condition: ['$TRAVIS_JOB_NAME = Pypi']
 
