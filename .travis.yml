@@ -4,90 +4,90 @@ env:
         - TRAVIS_TAG=v2021.8.25
 jobs:
     include:
-        # -
-            # name: 'Python 3.8.10 on Linux (AMD64)'
-            # os: linux
-            # dist: focal   # python3.8.10 include in osx:focal
-            # arch: amd64
-            # language: shell
-            # # language: python
-            # # python: 3.8.10 # pyinstaller编译时别用, travis自带的包库太多，而且不能python3 -m venv进虚拟环境，编译出来应用程序体积太大
-            # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
-            # before_install: 
-                # - 'sudo apt-get update && sudo apt install -y python3.8-venv'
-                # - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.8.10 on Linux (ARM64)'
-            # os: linux
-            # dist: focal   # python3.8.10 include in osx:focal
-            # arch: arm64
-            # language: shell
-            # # language: python
-            # # python: 3.8.10 # pyinstaller编译时别用, travis自带的包库太多，而且不能python3 -m venv进虚拟环境，编译出来应用程序体积太大
-            # env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
-            # before_install: 
-                # - 'sudo apt-get update && sudo apt install -y python3.8-venv'
-                # - 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.8.6 on macOS (AMD64)'
-            # os: osx
-            # osx_image: xcode11.6  # python3.8.6 include in osx:xcode11.6
-            # arch: amd64
-            # language: shell
-            # env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
-            # before_install: 'python3 -m venv tmpbuild && source tmpbuild/bin/activate'
-        # -
-            # name: 'Python 3.8.10 win64 on Windows (AMD64)'
-            # os: windows
-            # arch: amd64
-            # language: shell
-            # env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
-            # before_install: 
-                # - 'choco install python --version=3.8.10'
-                # - 'python -m venv tmpbuild && tmpbuild/Scripts/activate.bat'
-        # -
-            # name: 'Python 3.8.10 win32 on Windows (AMD64)'
-            # os: windows
-            # arch: amd64
-            # language: shell
-            # env: ['PATH=/c/Python38:/c/Python38/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
-            # before_install: 
-                # - '7z x ./win32bit/python-3.8.10-32bit.7z -o/c/'  # 在choco中没有提供python-3.8.10-32bit，我做了一个带tmpbuild的venv环境的python-3.8.10-32bit
-                # - '/c/Python38/tmpbuild/Scripts/activate.bat'
-    exclude:
-         -
-            name: 'Pypi' # pypi独立一个系统，不与Pyinstaller编译共用一个系统以减少应用程序体积
+        - stage: pyinstaller executable file  && deploy
+        -
+            name: 'Python 3.7.3 on Linux (AMD64)'
             os: linux
-            dist: bonic
+            dist: xenial
             arch: amd64
             language: python
-            python: 3.8.6
-            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
+            python: 3.7.3 # 使用低版本，增强兼容性
+            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-amd64.tar.gz]
+            before_install: 
+                - 'deactivate' # 默认进入virtualenv，要先deactivate，再新建一个venv，给pyinstaller编译用以减少程序体积
+                - '/opt/python/3.7.3/bin/python -m venv exebuild && source exebuild/bin/activate' 
+        -
+            name: 'Python 3.7.3 on Linux (ARM64)'
+            os: linux
+            dist: xenial
+            arch: amd64
+            language: python
+            python: 3.7.3
+            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby, RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-linux-arm64.tar.gz]
+            before_install: 
+                - 'deactivate'
+                - '/opt/python/3.7.3/bin/python -m venv exebuild && source exebuild/bin/activate' 
+        -
+            name: 'Python 3.7.4 on macOS (AMD64)'
+            os: osx
+            osx_image: xcode11.2  # python3.7.4 include in osx:xcode11.6
+            arch: amd64
+            language: shell
+            env: RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-macos-amd64.zip
+            before_install: 'python3 -m venv exebuild && source exebuild/bin/activate'
+        -
+            name: 'Python 3.7.3 win64 on Windows (AMD64)'
+            os: windows
+            arch: amd64
+            language: shell
+            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win64-amd64.zip]
+            before_install: 
+                - 'choco install python --version=3.7.3'
+                - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
+        -
+            name: 'Python 3.7.3 win32 on Windows (AMD64)'
+            os: windows
+            arch: amd64
+            language: shell
+            env: ['PATH=/c/Python37:/c/Python37/Scripts:$PATH', RELEASE_FILENAME=CDNDrivePro-$TRAVIS_TAG-win32-amd64.zip]
+            before_install: 
+                - '7z x ./win32bit/python-3.7.3-32bit.7z -o/c/'  # 自己做了一个python-3.7.3-32bit解压包
+                - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
+        install:
+            - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
+            - 'pip3 install -r requirements.txt'
+            - 'pip3 install pyinstaller'
+        script:
+            - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
+            - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
+            - 'mkdir -p release/CDNDrivePro'
+            - 'cp {dist/*,LICENSE,README.md} release/CDNDrivePro'
+            - 'cd release'
+            - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a -tzip $RELEASE_FILENAME CDNDrivePro; elif [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -r $RELEASE_FILENAME CDNDrivePro; else tar -czvf $RELEASE_FILENAME CDNDrivePro; fi'
+            - 'cd ..'
+        deploy:
+            -
+                provider: releases
+                api_key: $GITHUB_OAUTH_TOKEN
+                file: release/$RELEASE_FILENAME
+                overwrite: true
+                skip_cleanup: true
 
-install:
-    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
-    - 'pip3 install -r requirements.txt'
-    - 'pip3 install pyinstaller'
-script:
-    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
-    - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
-    - 'mkdir -p release/CDNDrivePro'
-    - 'cp {dist/*,LICENSE,README.md} release/CDNDrivePro'
-    - 'cd release'
-    - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a -tzip $RELEASE_FILENAME CDNDrivePro; elif [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -r $RELEASE_FILENAME CDNDrivePro; else tar -czvf $RELEASE_FILENAME CDNDrivePro; fi'
-    - 'cd ..'
-deploy:
-    -
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        file: release/$RELEASE_FILENAME
-        overwrite: true
-        skip_cleanup: true
-    -
-        provider: pypi
-        user: __token__
-        password: $PYPI_API_TOKEN
-        distributions: 'sdist bdist_wheel'
-        skip_existing: true
-        on:
-            condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64', '$TRAVIS_JOB_NAME = Pypi']
+        - stage: build Pypi && deploy
+        -
+            name: 'Pypi' # pypi独立一个系统，不与Pyinstaller编译共用一个系统以减少应用程序体积
+            os: linux
+            dist: xenial
+            arch: amd64
+            language: python
+            python: 3.7.3 # 使用低版本，增强兼容性
+            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
+        deploy:
+            -
+                provider: pypi
+                user: __token__
+                password: $PYPI_API_TOKEN
+                distributions: 'sdist bdist_wheel'
+                skip_existing: true
+                on:
+                    condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64', '$TRAVIS_JOB_NAME = Pypi']
