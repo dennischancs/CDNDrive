@@ -54,7 +54,8 @@ jobs:
             # before_install: 
                 # - '7z x ./win32bit/python-3.8.10-32bit.7z -o/c/'  # 在choco中没有提供python-3.8.10-32bit，我做了一个带tmpbuild的venv环境的python-3.8.10-32bit
                 # - '/c/Python38/tmpbuild/Scripts/activate.bat'
-        -
+    exclude:
+         -
             name: 'Pypi' # pypi独立一个系统，不与Pyinstaller编译共用一个系统以减少应用程序体积
             os: linux
             dist: bonic
