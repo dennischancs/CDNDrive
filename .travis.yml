@@ -60,7 +60,7 @@ jobs:
             dist: bonic
             arch: amd64
             language: python
-            python: 3.8.10
+            python: 3.8.6
             env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
 
 install:
