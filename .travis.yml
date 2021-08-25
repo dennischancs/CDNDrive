@@ -4,6 +4,7 @@ env:
     - TRAVIS_TAG=v2021.8.25.1
 jobs:
   include:
+    - stage: 'build && deploy'
     -
       name: 'Python 3.6.8 on Linux (AMD64)'
       os: linux
