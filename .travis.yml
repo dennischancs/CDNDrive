@@ -80,5 +80,4 @@ jobs:
       skip_existing: true
       on:
         condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
-        script: 'source ~/virtualenv/python3.6.8/bin/activate'
 
