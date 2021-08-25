@@ -52,14 +52,6 @@ jobs:
             before_install: 
                 - '7z x ./win32bit/python-3.7.3-32bit.7z -o/c/'  # 自己做了一个python-3.7.3-32bit解压包
                 - 'python -m venv exebuild && exebuild/Scripts/activate.bat'
-        -
-            name: 'PypiBuild'
-            os: linux
-            dist: xenial
-            arch: amd64
-            language: python
-            python: 3.7.3
-            env: ['PATH=~/.ruby/bin:$PATH', GEM_HOME=~/.ruby]
 install:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m pip install -U pip; else pip3 install -U pip; fi'
     - 'pip3 install -r requirements.txt'
@@ -81,10 +73,11 @@ deploy:
         skip_cleanup: true
     -
         provider: pypi
+        script: "deactivate && source ~/virtualenv/python3.7.3/bin/activate"
         user: __token__
         password: $PYPI_API_TOKEN
         distributions: 'sdist bdist_wheel'
         skip_existing: true
         on:
-            condition: ['$TRAVIS_JOB_NAME = PypiBuild']
+            condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
 
