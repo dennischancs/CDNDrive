@@ -60,7 +60,6 @@ install:
     # - 'pip3 install nuitka'
 script:
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then python -m CDNDrivePro -v; else python3 -m CDNDrivePro -v; fi'
-    # 用pyinstaller编译, 可执行文件效率提高
     - 'pyinstaller -F -n CDNDrivePro -i icon.ico CDNDrivePro/__main__.py'
     # - 'nuitka --onefile --standalone --windows-icon-from-ico=icon.ico CDNDrivePro/__main__.py --output-dir=dist'
     - 'mkdir -p release/CDNDrivePro'
@@ -68,23 +67,9 @@ script:
     - 'cd release'
     - 'if [ "$TRAVIS_OS_NAME" = "windows" ]; then 7z a -tzip $RELEASE_FILENAME CDNDrivePro; elif [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -r $RELEASE_FILENAME CDNDrivePro; else tar -czvf $RELEASE_FILENAME CDNDrivePro; fi'
     - 'cd ..'
-before_deploy:
-    script: 'source ~/virtualenv/python3.6.8/bin/activate'
-    on:
-      condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
 deploy:
-    -
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        file: release/$RELEASE_FILENAME
-        overwrite: true
-        skip_cleanup: true
-    -
-        provider: pypi
-        user: __token__
-        password: $PYPI_API_TOKEN
-        distributions: 'sdist bdist_wheel'
-        skip_existing: true
-        on:
-            condition: ['$TRAVIS_OS_NAME = linux', '$TRAVIS_CPU_ARCH = amd64']
-
+    provider: releases
+    api_key: $GITHUB_OAUTH_TOKEN
+    file: release/$RELEASE_FILENAME
+    overwrite: true
+    skip_cleanup: true
